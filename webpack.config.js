@@ -54,5 +54,10 @@ module.exports = {
             template: path.join(appSrc, 'templates/index.html'),
             filename: path.join(appRoot, 'dist/index.html'),
         }),
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(appRoot, 'dist'),
+        compress: true,
+        port: 9000
+    },
 };
