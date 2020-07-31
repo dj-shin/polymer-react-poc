@@ -8,6 +8,7 @@ export class ChildElement extends PolymerElement {
             .bordered {
                 border: 1px solid black;
                 padding: 1em;
+                background-color: coral;
             }
         </style>
         <div class="bordered">

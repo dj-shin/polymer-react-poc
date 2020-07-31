@@ -12,6 +12,7 @@ class SimpleElement extends PolymerElement {
             .bordered {
                 border: 1px solid black;
                 padding: 1em;
+                background-color: sandybrown;
             }
         </style>
         <div class="bordered">

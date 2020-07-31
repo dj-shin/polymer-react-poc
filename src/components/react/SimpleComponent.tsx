@@ -24,6 +24,7 @@ export const SimpleComponent: React.FunctionComponent<SimpleComponentProps> = (p
         <div className="simple-box" style={{
             border: "1px solid black",
             padding: "1em",
+            backgroundColor: "skyblue",
         }}>
             <p>[React] counter: {count}</p>
             {count % 2 ? <child-element count={count}></child-element> : undefined}
