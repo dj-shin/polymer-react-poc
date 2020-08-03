@@ -68,6 +68,11 @@ class SimpleElement extends PolymerElement {
         this.$.resetBtn.addEventListener("click", () => {
             this.count = 0;                 // property change does not update React component
         });
+
+        this.addEventListener("fire-on-leaf", (e) => {
+            e.detail.then.resolve( this.count );
+        });
     }
+
 }
 customElements.define(SimpleElement.is, SimpleElement);

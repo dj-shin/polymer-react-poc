@@ -27,7 +27,7 @@ export const SimpleComponent: React.FunctionComponent<SimpleComponentProps> = (p
             backgroundColor: "skyblue",
         }}>
             <p>[React] counter: {count}</p>
-            {count % 2 ? <child-element count={count}></child-element> : undefined}
+            {count % 1 ? <child-element count={count}></child-element> : undefined}
         </div>
     );
 };
