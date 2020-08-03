@@ -1,4 +1,5 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element';
+import { dispatchEvent } from "../../promisfy";
 
 export class ChildElement extends PolymerElement {
     static get template() {
@@ -12,7 +13,11 @@ export class ChildElement extends PolymerElement {
             }
         </style>
         <div class="bordered">
-            <p>[Polymer] I am leaf node [[count]]</p>
+            <p>
+                [Polymer] I am leaf node [[count]]
+                |
+                <button id="btnOk"> get count from Simple Element [polymer]</button>
+            </p>
         </div>
         `;
     }
@@ -30,6 +35,25 @@ export class ChildElement extends PolymerElement {
                 },
             }
         };
+    }
+
+    ready() {
+        super.ready();
+
+        this.$.btnOk.addEventListener("click", async () => {
+
+            console.log(`clicked. send event...`);
+            const response = await dispatchEvent(this, new CustomEvent("fire-on-leaf", {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    count: this.count
+                }
+            }));
+
+            console.log(`response in sync: `, response);
+            this.count = response;
+        });
     }
 }
 customElements.define(ChildElement.is, ChildElement);
