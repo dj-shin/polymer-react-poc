@@ -3,6 +3,7 @@ import { SimpleComponent } from '../react/SimpleComponent';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SideEffect from '../../modules/sideEffect';
 
 class SimpleElement extends PolymerElement {
     static get template() {
@@ -32,10 +33,12 @@ class SimpleElement extends PolymerElement {
 
     renderReactComponent() {
         console.log('SimpleElement::renderReactComponent');
-        const mountPoint = this.shadowRoot.getElementById("react-mount-point");
-        const simpleComponent = React.createElement(SimpleComponent, { count: this.count }, null);
-        ReactDOM.unmountComponentAtNode(mountPoint);
-        ReactDOM.render(simpleComponent, mountPoint);
+        if (this.shadowRoot) {
+            const mountPoint = this.shadowRoot.getElementById("react-mount-point");
+            const simpleComponent = React.createElement(SimpleComponent, { count: this.count }, null);
+            ReactDOM.unmountComponentAtNode(mountPoint);
+            ReactDOM.render(simpleComponent, mountPoint);
+        }
     }
 
     static get is() {
@@ -54,12 +57,16 @@ class SimpleElement extends PolymerElement {
         };
     }
 
+    _propertiesChanged(currentProps, changedProps, oldProps) {
+        super._propertiesChanged(currentProps, changedProps, oldProps);
+        this.renderReactComponent();
+    }
+
     ready() {
         super.ready();
 
         this.$.resetBtn.addEventListener("click", () => {
             this.count = 0;                 // property change does not update React component
-            this.renderReactComponent();    // must render again manually
         });
     }
 }
